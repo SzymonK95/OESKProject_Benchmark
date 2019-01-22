@@ -1,0 +1,199 @@
+﻿<Page x:Class="Benchmark.Views.TestsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Benchmark.Views"	
+      xmlns:oxy="http://oxyplot.codeplex.com"
+      xmlns:ChartToolKit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Benchmark">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="0" Command="{Binding Test1Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test1_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Command="{Binding Test2Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test2_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Command="{Binding Test3Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test3_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+        </Grid>
+
+        <Grid Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="0" Command="{Binding Test4Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test4_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="1" Command="{Binding Test5Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test5_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+            <Button Style="{StaticResource MyButtonStyle}" Grid.Column="2" Command="{Binding Test6Button_ClickCommand}" IsEnabled="{Binding Tests_AreEnabled}">
+                <Button.Content>
+                    <Viewbox>
+                        <TextBlock Text="{Binding Test6_ButtonContent}" Style="{StaticResource MyTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                </Button.Content>
+            </Button>
+
+        </Grid>
+
+        <Grid Row="2">
+            <ChartToolKit:Chart Title="Wyniki testów">
+                <ChartToolKit:BarSeries  Title="Avg result" DependentValuePath="Value" 
+
+                                            IndependentValuePath="Key" ItemsSource="{Binding ResultFromDataBase}" 
+
+                                            IsSelectionEnabled="True"/>
+
+                <ChartToolKit:BarSeries Title="Your result" DependentValuePath="Value" 
+
+                                         IndependentValuePath="Key" ItemsSource="{Binding ResultFromUser}" 
+
+                                         IsSelectionEnabled="True"/>
+
+            </ChartToolKit:Chart>
+        </Grid>
+
+        <Grid Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Column="0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Red" Style="{StaticResource MyRedTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+
+                    <Viewbox Grid.Row="1" Grid.Column="1" >
+                        <TextBlock Text="{Binding ElementName=sliderColorRed, Path=Value, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MyTextBlockForSliderStyle}" />
+                    </Viewbox>
+
+                    <Slider Grid.Row="1" Grid.Column="0" Maximum="8" Minimum="0" Style="{StaticResource MySliderVerticalStyle}" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="sliderColorRed" Value="{Binding SliderRedValue}"/>
+                </Grid>
+
+                <Grid Column="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Green" Style="{StaticResource MyGreenTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"  >
+                        <TextBlock Text="{Binding ElementName=sliderColorGreen, Path=Value, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MyTextBlockForSliderStyle}" />
+                    </Viewbox>
+                    <Slider Grid.Row="1" Grid.Column="0" Maximum="8" Minimum="0" Style="{StaticResource MySliderVerticalStyle}" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="sliderColorGreen" Value="{Binding SliderGreenValue}"/>
+                </Grid>
+
+                <Grid Column="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Blue" Style="{StaticResource MyBlueTextBlockStyle}"></TextBlock>
+                    </Viewbox>
+
+                    <Viewbox Grid.Row="1" Grid.Column="1" >
+                        <TextBlock Text="{Binding ElementName=sliderColorBlue, Path=Value, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MyTextBlockForSliderStyle}" />
+                    </Viewbox>
+
+                    <Slider Grid.Row="1" Grid.Column="0" Maximum="8" Minimum="0" Style="{StaticResource MySliderVerticalStyle}" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="sliderColorBlue" Value="{Binding SliderBlueValue}"/>
+                </Grid>
+            </Grid>
+
+            <Grid Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Ilość testów" Style="{StaticResource MyTextBlockForSliderStyle}"></TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ProgressBarMaxValue}" PreviewTextInput="NumberValidationTextBox" Style="{StaticResource MyTextBoxStyle}" MaxLength="3" IsEnabled="{Binding Tests_AreEnabled}"/>
+
+                <ProgressBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"  Value="{Binding ProgressBarValue}" Maximum="{Binding ProgressBarMaxValue}" Style="{StaticResource MyProgressBarStyle}"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

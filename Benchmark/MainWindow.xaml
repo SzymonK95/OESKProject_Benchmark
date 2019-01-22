@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benchmark"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Benchmark" Height="600" Width="800" MinHeight="600" MinWidth="800">
     <Grid>
-        
+
     </Grid>
 </Window>

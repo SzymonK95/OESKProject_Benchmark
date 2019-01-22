@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BenchmarkDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="processor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProcesorId" Type="int" />
+          <Property Name="TestSize" Type="int" />
+          <Property Name="AvarageTime" Type="float" />
+          <Property Name="DateTimeOfTest" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BenchmarkDB.dbo.TestView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TestView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProcessorName" Type="varchar" MaxLength="255" />
+          <Property Name="TestSize" Type="int" />
+          <Property Name="AvarageTime" Type="float" />
+          <Property Name="DateTimeOfTest" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__test__ProcesorId__4BAC3F29">
+          <End Role="processor" Type="Self.processor" Multiplicity="0..1" />
+          <End Role="test" Type="Self.test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="processor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="test">
+              <PropertyRef Name="ProcesorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BenchmarkDBModelStoreContainer">
+          <EntitySet Name="processor" EntityType="Self.processor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test" EntityType="Self.test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestView" EntityType="Self.TestView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TestView].[Id] AS [Id], 
+    [TestView].[ProcessorName] AS [ProcessorName], 
+    [TestView].[TestSize] AS [TestSize], 
+    [TestView].[AvarageTime] AS [AvarageTime], 
+    [TestView].[DateTimeOfTest] AS [DateTimeOfTest]
+    FROM [dbo].[TestView] AS [TestView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__test__ProcesorId__4BAC3F29" Association="Self.FK__test__ProcesorId__4BAC3F29">
+            <End Role="processor" EntitySet="processor" />
+            <End Role="test" EntitySet="test" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BenchmarkDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="processor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tests" Relationship="Self.FK__test__ProcesorId__4BAC3F29" FromRole="processor" ToRole="test" />
+        </EntityType>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProcesorId" Type="Int32" />
+          <Property Name="TestSize" Type="Int32" />
+          <Property Name="AvarageTime" Type="Double" />
+          <Property Name="DateTimeOfTest" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="processor" Relationship="Self.FK__test__ProcesorId__4BAC3F29" FromRole="test" ToRole="processor" />
+        </EntityType>
+        <EntityType Name="TestView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProcessorName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TestSize" Type="Int32" />
+          <Property Name="AvarageTime" Type="Double" />
+          <Property Name="DateTimeOfTest" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__test__ProcesorId__4BAC3F29">
+          <End Role="processor" Type="Self.processor" Multiplicity="0..1" />
+          <End Role="test" Type="Self.test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="processor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="test">
+              <PropertyRef Name="ProcesorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BenchmarkDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="processors" EntityType="Self.processor" />
+          <EntitySet Name="tests" EntityType="Self.test" />
+          <EntitySet Name="TestViews" EntityType="Self.TestView" />
+          <AssociationSet Name="FK__test__ProcesorId__4BAC3F29" Association="Self.FK__test__ProcesorId__4BAC3F29">
+            <End Role="processor" EntitySet="processors" />
+            <End Role="test" EntitySet="tests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BenchmarkDBModelStoreContainer" CdmEntityContainer="BenchmarkDBEntities">
+          <EntitySetMapping Name="processors">
+            <EntityTypeMapping TypeName="BenchmarkDBModel.processor">
+              <MappingFragment StoreEntitySet="processor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tests">
+            <EntityTypeMapping TypeName="BenchmarkDBModel.test">
+              <MappingFragment StoreEntitySet="test">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcesorId" ColumnName="ProcesorId" />
+                <ScalarProperty Name="TestSize" ColumnName="TestSize" />
+                <ScalarProperty Name="AvarageTime" ColumnName="AvarageTime" />
+                <ScalarProperty Name="DateTimeOfTest" ColumnName="DateTimeOfTest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestViews">
+            <EntityTypeMapping TypeName="BenchmarkDBModel.TestView">
+              <MappingFragment StoreEntitySet="TestView">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProcessorName" ColumnName="ProcessorName" />
+                <ScalarProperty Name="TestSize" ColumnName="TestSize" />
+                <ScalarProperty Name="AvarageTime" ColumnName="AvarageTime" />
+                <ScalarProperty Name="DateTimeOfTest" ColumnName="DateTimeOfTest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
